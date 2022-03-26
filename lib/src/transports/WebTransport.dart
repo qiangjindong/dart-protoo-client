@@ -10,6 +10,7 @@ final _logger = Logger('Logger::WebTransport');
 class Transport extends TransportInterface {
   late bool _closed;
   late String _url;
+  // ignore: unused_field
   late dynamic _options;
   WebSocket? _ws;
 

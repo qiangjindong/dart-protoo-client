@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import '../EnhancedEventEmitter.dart';
 
 abstract class TransportInterface extends EnhancedEventEmitter {

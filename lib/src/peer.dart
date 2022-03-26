@@ -163,14 +163,14 @@ class Peer extends EnhancedEventEmitter {
       this.safeEmit('failed', currentAttempt);
     });
 
-    _transport.on('close', () {
+    _transport.on('close', (message) {
       if (this._closed) return;
       this._closed = true;
       logger.debug('emit "close"');
 
       this._connected = false;
 
-      this.safeEmit('close');
+      this.safeEmit('close', message);
     });
 
     this._transport.on('message', (message) {
@@ -200,7 +200,7 @@ class Peer extends EnhancedEventEmitter {
         if (!(errorCode is num)) {
           errorReason = errorCode.toString();
           errorCode = 500;
-        } else if (errorCode is num && errorReason is String) {
+        } else if (errorReason is String) {
           errorReason = errorReason.toString();
         }
 
@@ -215,7 +215,7 @@ class Peer extends EnhancedEventEmitter {
       final response =
           Message.createErrorResponse(request, 500, error.toString());
 
-      this._transport.send(response).catchError(() => {});
+      this._transport.send(response).catchError((e, st) => {});
     }
   }
 
